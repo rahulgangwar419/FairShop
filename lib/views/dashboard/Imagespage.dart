@@ -65,20 +65,6 @@ class _DashBoardState extends State<DashBoard> {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2),
         )
-    
-        // Center(
-        //   child: Text('This is the next page!'),
-        // ),
-        // floatingActionButton: ElevatedButton(
-        //     child: const Text(
-        //       'LOG OUT ',
-        //       style: TextStyle(
-        //         color: Color.fromARGB(255, 197, 18, 108),
-        //       ),
-        //     ),
-        //     onPressed: () {
-        //       Navigator.of(context).pop();
-        //     }),
         
         );
   }
