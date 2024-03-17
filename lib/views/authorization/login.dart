@@ -1,3 +1,4 @@
+import 'package:firstprogram/controllers/auth_controller.dart';
 import 'package:firstprogram/views/authorization/signupPage.dart';
 import 'package:firstprogram/views/splash_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -98,6 +99,7 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     onPressed: () async {
+                     await fetchData();
                       var sharedPref = await SharedPreferences.getInstance();
                       sharedPref.setBool(SplashScreenState.KEYLOGIN, true);
                       if (_formKey.currentState!.validate()) {
