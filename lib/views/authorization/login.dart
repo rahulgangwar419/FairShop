@@ -109,7 +109,6 @@ class LoginPage extends StatelessWidget {
                           MaterialPageRoute(
                               builder: (context) => const HomePage()),
                         );
-                        print('Username: $email, Password: $password');
                       }
                     }),
                 const SizedBox(
