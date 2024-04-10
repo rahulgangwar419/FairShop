@@ -1,5 +1,5 @@
 // import 'package:firstprogram/widgets/custom_elevated_button.dart';
-import 'package:firstprogram/views/splash_page.dart';
+import 'package:firstprogram/views/dashboard/ui/splash_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SplashScreen(),
+      home:  const SplashScreen(),
     );
   }
 }

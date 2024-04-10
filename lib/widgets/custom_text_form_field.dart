@@ -13,10 +13,11 @@ class CustomTextFormField extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final ValueChanged<String>? onFieldSubmitted;
   final Function(String?)? onSaved;
+  final InputDecoration? decoration;
 
   const CustomTextFormField(
       {super.key,
-       //this.controller,
+      //this.controller,
       required this.labelText,
       required this.hintText,
       this.prefixIcon,
@@ -26,6 +27,7 @@ class CustomTextFormField extends StatelessWidget {
       this.textInputAction = TextInputAction.done,
       this.validator,
       this.onFieldSubmitted,
+      this.decoration,
       this.hintStyle,
       this.onSaved});
 
@@ -46,6 +48,7 @@ class CustomTextFormField extends StatelessWidget {
       validator: validator,
       onFieldSubmitted: onFieldSubmitted,
       onSaved: onSaved,
+      
     );
   }
 }

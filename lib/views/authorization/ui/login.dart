@@ -1,8 +1,8 @@
 import 'package:firstprogram/controllers/auth_controller.dart';
-import 'package:firstprogram/views/authorization/signupPage.dart';
-import 'package:firstprogram/views/splash_page.dart';
+import 'package:firstprogram/views/authorization/ui/signupPage.dart';
+import 'package:firstprogram/views/dashboard/ui/splash_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../dashboard/Homepage.dart';
+import 'package:firstprogram/features/home/ui/Homepage.dart';
 import 'package:firstprogram/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
@@ -46,11 +46,11 @@ class LoginPage extends StatelessWidget {
       backgroundColor: Colors.pink.shade50,
       appBar: AppBar(
         title: Center(
-            child: Image.asset(
-          "assets/icon/facebook_logo.png",
-          width: 160,
+            child: Text(
+          'Fair Shop',
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         )),
-        backgroundColor: Colors.pink.shade400,
+        backgroundColor: Colors.lightBlue,
       ),
       body: Form(
         key: _formKey,
@@ -62,8 +62,10 @@ class LoginPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomTextFormField(
-                  // controller: loginEmail,
                   labelText: "Email Address",
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)))),
                   hintText: "Enter your email",
                   hintStyle: TextStyle(color: Colors.grey.shade400),
                   keyboardType: TextInputType.emailAddress,
@@ -99,7 +101,7 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     onPressed: () async {
-                     await fetchData();
+                      //await fetchData();
                       var sharedPref = await SharedPreferences.getInstance();
                       sharedPref.setBool(SplashScreenState.KEYLOGIN, true);
                       if (_formKey.currentState!.validate()) {
