@@ -20,4 +20,6 @@ class WishListItemAddToCartEvent extends WishlistEvent {
   WishListItemAddToCartEvent({required this.wishListedItem});
 }
 
-class WishListItemNotFoundEvent extends WishlistEvent{}
+class WishListItemNotFoundEvent extends WishlistEvent{
+  
+}

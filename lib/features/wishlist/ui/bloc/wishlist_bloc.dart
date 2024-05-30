@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:firstprogram/data/cart_items.dart';
 import 'package:firstprogram/data/product_list.dart';
 import 'package:firstprogram/data/wishlist_items.dart';
 import 'package:meta/meta.dart';
@@ -13,6 +12,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   WishlistBloc() : super(WishlistInitialState()) {
     on<WishlistInitial>(wishlistInitial);
     on<WishListItemRemoveEvent>(wishListItemRemoveEvent);
+    on<WishListItemAddToCartEvent>(wishListItemAddToCartEvent);
   }
 
   FutureOr<void> wishlistInitial(
@@ -25,5 +25,11 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
     print('Item Remove');
     wishlistItems.remove(event.wishListedItem);
     emit(WishlistInitialState());
+  }
+
+  FutureOr<void> wishListItemAddToCartEvent(
+      WishListItemAddToCartEvent event, Emitter<WishlistState> emit) {
+    print('item moved to Cart');
+    wishlistItems.add(event.wishListedItem);
   }
 }

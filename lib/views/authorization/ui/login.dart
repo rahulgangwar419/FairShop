@@ -1,4 +1,3 @@
-import 'package:firstprogram/controllers/auth_controller.dart';
 import 'package:firstprogram/views/authorization/ui/signupPage.dart';
 import 'package:firstprogram/views/dashboard/ui/splash_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';

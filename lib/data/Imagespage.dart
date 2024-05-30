@@ -19,12 +19,6 @@ class _DashBoardState extends State<DashBoard> {
 
   @override
   Widget build(BuildContext context) {
-    var colorList = [
-      Colors.redAccent,
-      Colors.deepPurpleAccent,
-      Colors.green,
-      Colors.grey
-    ];
     var imagePathList = [
       'assets/images/pic1.jpg',
       'assets/images/pic2.png',

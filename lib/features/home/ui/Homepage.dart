@@ -1,5 +1,5 @@
-import 'dart:developer';
 import 'package:firstprogram/data/cart_items.dart';
+import 'package:firstprogram/data/product_detail.dart';
 import 'package:firstprogram/features/home/ui/bloc/home_bloc.dart';
 import 'package:firstprogram/features/wishlist/ui/wishlist_page.dart';
 import 'package:firstprogram/views/authorization/ui/login.dart';
@@ -193,10 +193,12 @@ class HomePageState extends State<HomePage> {
         currentIndex: myIndex,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border_outlined), label: 'Wish List'),
+          // BottomNavigationBarItem(
+          // icon: Icon(Icons.favorite_border_outlined), label: 'Wish List'),
           BottomNavigationBarItem(
               icon: Icon(Icons.shopping_basket_rounded), label: 'My Cart'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person_2_outlined), label: 'Profile')
         ]);
   }
 
@@ -240,17 +242,33 @@ class HomePageState extends State<HomePage> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => WishlistPage()));
             } else if (state is HomeProductItemCartedActionState) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(content: Text('Item Carted')));
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  duration: Duration(seconds: 1),
+                  backgroundColor: Colors.green,
+                  content: Text(
+                    'Item Carted',
+                    style: TextStyle(color: Colors.white),
+                  )));
             } else if (state is HomeProductItemWishlistedActionState) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Item Wishlisted')));
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  duration: Duration(seconds: 1),
+                  backgroundColor: Colors.green,
+                  content: Text('Item Wishlisted')));
             } else if (state is HomeProductWhistlistAlreadyExistActionState) {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('Item Wishlisted Alreay Exist.')));
+                  duration: Duration(seconds: 1),
+                  backgroundColor: Colors.red,
+                  content: Text(
+                    'Item Wishlisted Alreay Exist.',
+                    style: TextStyle(color: Colors.white),
+                  )));
             } else if (state is HomeProductCartAlreadyExistActionState) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Item alrady in Cart.')));
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  backgroundColor: Colors.red,
+                  content: Text(
+                    'Item alrady in Cart..!',
+                    style: TextStyle(color: Colors.white),
+                  )));
             }
           },
           builder: (context, state) {
@@ -336,80 +354,93 @@ class HomePageState extends State<HomePage> {
                               crossAxisSpacing: 8,
                               mainAxisSpacing: 8),
                       itemBuilder: (context, index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(8.0)),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                  child: ClipRRect(
-                                borderRadius: BorderRadius.circular(7),
-                                child: Image.network(
-                                  products[index].imageUrl,
-                                  height: 100,
-                                  fit: BoxFit.fitWidth,
-                                ),
-                              )),
-                              const SizedBox(width: 4),
-                              Text(products[index].name,
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold)),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    'Rs.${products[index].price.toStringAsFixed(2)}',
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  InkWell(
-                                      onTap: () {
-                                        homeBloc.add(
-                                            HomeProductWishlistButtonClickedEvent(
-                                                clickedProduct: Product(
-                                          name: products[index].name,
-                                          imageUrl: products[index].imageUrl,
-                                          price: products[index].price,
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProductDetailPage(
+                                          product: products[index],
                                         )));
-                                      },
-                                      child: const Icon(
-                                        Icons.favorite_border_outlined,
-                                        color: Colors.red,
-                                      )),
-                                  const SizedBox(
-                                    width: 5,
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(8.0)),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                    child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(7),
+                                  child: Image.network(
+                                    products[index].imageUrl,
+                                    height: 100,
+                                    fit: BoxFit.fitWidth,
                                   ),
-                                  InkWell(
-                                      onTap: () {
-                                        homeBloc.add(
-                                            HomeProductCartButtonClickedEvent(
-                                                clickedProduct: CartProduct(
-                                                    name: products[index].name,
-                                                    imageUrl: products[index]
-                                                        .imageUrl,
-                                                    price:
-                                                        products[index].price,
-                                                    quantitiy: 1)));
-                                      },
-                                      child: const Icon(
-                                        Icons.add_shopping_cart_rounded,
-                                        color: Color.fromARGB(255, 18, 160, 91),
-                                      )),
-                                ],
-                              ),
-                            ],
+                                )),
+                                const SizedBox(width: 4),
+                                Text(products[index].name,
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold)),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      'Rs.${products[index].price.toStringAsFixed(2)}',
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    InkWell(
+                                        onTap: () {
+                                          homeBloc.add(
+                                              HomeProductWishlistButtonClickedEvent(
+                                                  clickedProduct: Product(
+                                            name: products[index].name,
+                                            imageUrl: products[index].imageUrl,
+                                            price: products[index].price,
+                                            category: '',
+                                          )));
+                                        },
+                                        child: const Icon(
+                                          Icons.favorite_border_outlined,
+                                          color: Colors.red,
+                                        )),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    InkWell(
+                                        onTap: () {
+                                          homeBloc.add(
+                                              HomeProductCartButtonClickedEvent(
+                                                  clickedProduct: CartProduct(
+                                                      name:
+                                                          products[index].name,
+                                                      imageUrl: products[index]
+                                                          .imageUrl,
+                                                      price:
+                                                          products[index].price,
+                                                      quantitiy: 1)));
+                                        },
+                                        child: const Icon(
+                                          Icons.add_shopping_cart_rounded,
+                                          color:
+                                              Color.fromARGB(255, 18, 160, 91),
+                                        )),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       }),

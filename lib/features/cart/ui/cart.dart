@@ -1,10 +1,9 @@
-import 'dart:ffi';
-
+import 'dart:developer';
 import 'package:firstprogram/data/cart_items.dart';
 import 'package:firstprogram/features/cart/ui/bloc/cart_bloc_bloc.dart';
+import 'package:firstprogram/payment/payment_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Cart extends StatefulWidget {
@@ -17,19 +16,33 @@ class Cart extends StatefulWidget {
 class _CartState extends State<Cart> {
   final CartBlocBloc cartBlocBloc = CartBlocBloc();
   double itemTotalPrice = 0.0;
-  int qty = 0;
-  int itemCount = 0;
-  double allItemAmount = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Calculate initial total price based on current cart items
+    itemTotalPrice = cartItems.fold(
+        0, (total, current) => total + current.price * current.quantitiy);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CartBlocBloc, CartBlocState>(
-      bloc: CartBlocBloc(),
+      bloc: cartBlocBloc,
       listenWhen: (previous, current) => current is CartBlocActionState,
       buildWhen: (previous, current) => current is! CartBlocActionState,
       listener: (context, state) {
         if (state is CartItemRemoveFromCartActionState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Item Remove From Cart")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              backgroundColor: Colors.green,
+              content: Text(
+                "Item Removed From Cart",
+                style: TextStyle(color: Colors.white),
+              )));
+        } else if (state is CartItemAddQuantityState) {
+          setState(() {
+            itemTotalPrice += state.itemPrice;
+          });
         }
       },
       builder: (context, state) {
@@ -105,21 +118,23 @@ class _CartState extends State<Cart> {
                                     children: [
                                       InkWell(
                                           onTap: () {
-                                            if (cartItems[index].quantitiy <=
-                                                1) {
-                                              return;
-                                            }
-                                            int quantityItem =
-                                                cartItems[index].quantitiy - 1;
-                                            cartItems[index] = CartProduct(
-                                                name: cartItems[index].name,
-                                                imageUrl:
-                                                    cartItems[index].imageUrl,
-                                                price: cartItems[index].price,
-                                                quantitiy: quantityItem);
-                                            itemTotalPrice = itemTotalPrice -
-                                                cartItems[index].price;
-                                            setState(() {});
+                                            setState(() {
+                                              if (cartItems[index].quantitiy >
+                                                  0) {
+                                                int quantityItem =
+                                                    cartItems[index].quantitiy -
+                                                        1;
+                                                itemTotalPrice -=
+                                                    cartItems[index].price;
+                                                cartItems[index] = CartProduct(
+                                                    name: cartItems[index].name,
+                                                    imageUrl: cartItems[index]
+                                                        .imageUrl,
+                                                    price:
+                                                        cartItems[index].price,
+                                                    quantitiy: quantityItem);
+                                              }
+                                            });
                                           },
                                           child:
                                               const Icon(Icons.remove_circle)),
@@ -132,23 +147,36 @@ class _CartState extends State<Cart> {
                                       ),
                                       InkWell(
                                           onTap: () {
-                                            int quantityItem =
-                                                cartItems[index].quantitiy + 1;
-                                            cartItems[index] = CartProduct(
-                                                name: cartItems[index].name,
-                                                imageUrl:
-                                                    cartItems[index].imageUrl,
-                                                price: cartItems[index].price,
-                                                quantitiy: quantityItem);
-                                            itemTotalPrice = itemTotalPrice +
-                                                cartItems[index].price;
-                                            setState(() {});
+                                            setState(() {
+                                              int quantityItem =
+                                                  cartItems[index].quantitiy +
+                                                      1;
+                                              itemTotalPrice +=
+                                                  cartItems[index].price;
+                                              cartItems[index] = CartProduct(
+                                                  name: cartItems[index].name,
+                                                  imageUrl:
+                                                      cartItems[index].imageUrl,
+                                                  price: cartItems[index].price,
+                                                  quantitiy: quantityItem);
+                                            });
                                           },
                                           child: const Icon(Icons.add_circle))
                                     ],
                                   ),
                                   InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      setState(() {
+                                       
+                                        itemTotalPrice -=
+                                            cartItems[index].price *
+                                                cartItems[index].quantitiy;
+                                        cartItems.removeAt(index);
+                                      });
+                                      cartBlocBloc.add(
+                                          CartItemRemoveFromCartEvent(
+                                              cartProduct: cartItems[index]));
+                                    },
                                     child: const Icon(
                                       Icons.delete_forever_sharp,
                                       color: Colors.red,
@@ -172,22 +200,21 @@ class _CartState extends State<Cart> {
                       width: MediaQuery.of(context).size.width,
                       child: Column(
                         children: [
-                           Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
-                                'Items Total Amount',
+                                'Items Amount',
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                itemTotalPrice.toString(),
+                                itemTotalPrice.toStringAsFixed(2),
                                 style: const TextStyle(
                                     fontSize: 14, fontWeight: FontWeight.bold),
                               )
                             ],
                           ),
-
                           const Divider(
                             thickness: 0.2,
                             color: Colors.grey,
@@ -207,41 +234,30 @@ class _CartState extends State<Cart> {
                               )
                             ],
                           ),
-
                           const Divider(
                             thickness: 0.2,
                             color: Colors.grey,
                           ),
-                          const Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Total Amout',
+                              const Text(
+                                'Total Amount',
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                '3020',
-                                style: TextStyle(
+                                (itemTotalPrice + 20).toStringAsFixed(
+                                    2), // Adding shipping amount
+                                style: const TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.bold),
                               )
                             ],
                           ),
-
                           const Divider(
                             thickness: 0.5,
                             color: Colors.grey,
                           ),
-                          // TextButton(
-                          //   child: Text(
-                          //     'Payment Now',
-                          //     style: TextStyle(
-                          //         color: Colors.white,
-                          //         backgroundColor: Colors.lightBlue),
-                          //   ),
-                          //   onPressed: () {},
-                          // )
-
                           Align(
                               alignment: Alignment.bottomCenter,
                               child: Container(
@@ -249,9 +265,16 @@ class _CartState extends State<Cart> {
                                   width: double.infinity,
                                   child: CupertinoButton(
                                     color: Colors.blue,
-                                    child: Text('Pay Now',
+                                    child: const Text('Pay Now',
                                         style: TextStyle(fontSize: 20)),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => PaymentPage(
+                                                  amount:
+                                                      itemTotalPrice + 20)));
+                                    },
                                   ))),
                         ],
                       ),

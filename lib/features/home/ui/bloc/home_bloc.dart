@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:firstprogram/data/cart_items.dart';
 import 'package:firstprogram/data/product_list.dart';
@@ -42,7 +40,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   FutureOr<void> homeProductCartButtonClickedEvent(
       HomeProductCartButtonClickedEvent event, Emitter<HomeState> emit) {
          bool alreadyExists =
-        wishlistItems.any((item) => item.name == event.clickedProduct.name);
+        cartItems.any((item) => item.name == event.clickedProduct.name);
          if (!alreadyExists){
              cartItems.add(event.clickedProduct);
              emit(HomeProductItemCartedActionState());
