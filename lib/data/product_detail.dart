@@ -71,18 +71,9 @@ class ProductDetailPage extends StatelessWidget {
                       ),
 
                       // We temporary added this Icon Button just for page Checking
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AccountDetails(),
-                                ));
-                          },
-                          icon: Icon(Icons.alarm))
                     ],
                   ),
                 ),

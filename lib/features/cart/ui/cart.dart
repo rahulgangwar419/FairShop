@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../payment/payment.dart';
+
 class Cart extends StatefulWidget {
   const Cart({super.key});
 
@@ -167,7 +169,6 @@ class _CartState extends State<Cart> {
                                   InkWell(
                                     onTap: () {
                                       setState(() {
-                                       
                                         itemTotalPrice -=
                                             cartItems[index].price *
                                                 cartItems[index].quantitiy;
@@ -268,12 +269,13 @@ class _CartState extends State<Cart> {
                                     child: const Text('Pay Now',
                                         style: TextStyle(fontSize: 20)),
                                     onPressed: () {
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => PaymentPage(
-                                                  amount:
-                                                      itemTotalPrice + 20)));
+                                      makePayment((itemTotalPrice + 20).ceil().toString());
+                                      // Navigator.pushReplacement(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) => PaymentPage(
+                                      //             amount:
+                                      //                 itemTotalPrice + 20)));
                                     },
                                   ))),
                         ],

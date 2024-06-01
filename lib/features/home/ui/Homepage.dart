@@ -62,7 +62,7 @@ class HomePageState extends State<HomePage> {
                 ),
                 const Text.rich(TextSpan(children: <TextSpan>[
                   TextSpan(
-                      text: 'B.Tech.',
+                      text: 'rahul@gmail.com',
                       style: TextStyle(
                         fontSize: 15,
                       )),
@@ -140,39 +140,71 @@ class HomePageState extends State<HomePage> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        contentPadding: EdgeInsets.all(20),
                         title: const Center(
-                            child: Text(
-                          'Do you want to Logout',
-                          style: TextStyle(
+                          child: Text(
+                            'Do you want to Logout',
+                            style: TextStyle(
                               color: Colors.black,
                               fontSize: 24,
-                              fontWeight: FontWeight.bold),
-                        )),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        actionsPadding:
+                            const EdgeInsets.only(right: 50, bottom: 20),
                         actions: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text(
-                                    'Cancel',
-                                    style: TextStyle(color: Colors.black),
-                                  )),
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => LoginPage()));
-                                  },
-                                  child: const Text(
-                                    'Logout',
-                                    style: TextStyle(color: Colors.black),
-                                  ))
-                            ],
-                          )
+                          Expanded(
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              style: TextButton.styleFrom(
+                                backgroundColor: Colors.grey.shade200,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()),
+                                );
+                              },
+                              style: TextButton.styleFrom(
+                                backgroundColor: Colors.redAccent,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                              child: Text(
+                                'Logout',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       );
                     });
@@ -196,14 +228,14 @@ class HomePageState extends State<HomePage> {
 
   Widget buildBottomNavigationBar() {
     return BottomNavigationBar(
-       type: BottomNavigationBarType.fixed,
+        type: BottomNavigationBarType.fixed,
         onTap: (index) {
           setState(() {
             myIndex = index;
           });
         },
         currentIndex: myIndex,
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
               icon: Icon(Icons.favorite_outline_outlined), label: 'Wishlist'),
@@ -216,7 +248,6 @@ class HomePageState extends State<HomePage> {
 
   AppBar buildAppBar() {
     return AppBar(
-      
       title: const Text(
         "Fair Shop",
         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -225,12 +256,16 @@ class HomePageState extends State<HomePage> {
       actions: [
         IconButton(
             onPressed: () {
-              homeBloc.add(HomeWishlistButtonNavigateEvent());
+              // homeBloc.add(HomeWishlistButtonNavigateEvent());
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => WishlistPage()));
             },
             icon: const Icon(Icons.favorite_border_rounded)),
         IconButton(
             onPressed: () {
-              homeBloc.add(HomeCartButtonNavigateEvent());
+              //  homeBloc.add(HomeCartButtonNavigateEvent());
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Cart()));
             },
             icon: const Icon(Icons.shopping_bag_rounded))
       ],
@@ -239,14 +274,11 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => homeBloc,
-      child: Scaffold(
-        drawer: buildDrawer(context),
-        bottomNavigationBar: buildBottomNavigationBar(),
-        appBar: buildAppBar(),
-        body: _pages[myIndex],
-      ),
+    return Scaffold(
+      drawer: buildDrawer(context),
+      bottomNavigationBar: buildBottomNavigationBar(),
+      appBar: buildAppBar(),
+      body: _pages[myIndex],
     );
   }
 }
@@ -257,6 +289,7 @@ class HomeContentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeBloc, HomeState>(
+      bloc: homeBloc,
       buildWhen: (previous, current) => current is! HomeActionState,
       listenWhen: (previous, current) => current is HomeActionState,
       listener: (context, state) {
