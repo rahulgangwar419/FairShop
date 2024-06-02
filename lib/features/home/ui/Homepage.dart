@@ -33,13 +33,15 @@ class HomePageState extends State<HomePage> {
       elevation: 10,
       width: 220,
       shadowColor: Colors.red,
-      child: ListView(
+      child: Column(
         children: [
           Container(
-            height: 150,
+            // height: 150,
+            width: MediaQuery.of(context).size.width,
             color: const Color.fromARGB(255, 228, 213, 182),
             child: Column(
               children: [
+                const SizedBox(height: 50,),
                 Card(
                   clipBehavior: Clip.hardEdge,
                   elevation: 8,
@@ -127,9 +129,7 @@ class HomePageState extends State<HomePage> {
             thickness: 0.5,
             color: Colors.grey,
           ),
-          const SizedBox(
-            height: 340,
-          ),
+        const Spacer(),
           const Divider(
             thickness: 0.5,
             color: Colors.grey,
@@ -158,50 +158,46 @@ class HomePageState extends State<HomePage> {
                         actionsPadding:
                             const EdgeInsets.only(right: 50, bottom: 20),
                         actions: <Widget>[
-                          Expanded(
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              style: TextButton.styleFrom(
-                                backgroundColor: Colors.grey.shade200,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.grey.shade200,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
-                              child: Text(
-                                'Cancel',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            ),
+                            child: const Text(
+                              'Cancel',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginPage()),
-                                );
-                              },
-                              style: TextButton.styleFrom(
-                                backgroundColor: Colors.redAccent,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
+                          const SizedBox(width: 10),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPage()),
+                              );
+                            },
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.redAccent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
-                              child: Text(
-                                'Logout',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            ),
+                            child: const Text(
+                              'Logout',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -214,12 +210,39 @@ class HomePageState extends State<HomePage> {
                 size: 25,
                 color: Colors.black,
               ),
-              label: const Text(
-                'Logout',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
+              label: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Logout',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Version : 1(1.0.5)',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'Owner : Rahul',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
               ))
         ],
       ),
