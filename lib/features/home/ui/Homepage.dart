@@ -224,7 +224,7 @@ class HomePageState extends State<HomePage> {
                     height: 5,
                   ),
                   Text(
-                    'Version : 1(1.0.5)',
+                    'Version : 1(1.0.6)',
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 12,
