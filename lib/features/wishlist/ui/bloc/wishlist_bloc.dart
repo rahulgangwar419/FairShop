@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:firstprogram/data/product_list.dart';
-import 'package:firstprogram/data/wishlist_items.dart';
+import 'package:fairShop/data/product_list.dart';
+import 'package:fairShop/data/wishlist_items.dart';
 import 'package:meta/meta.dart';
 
 part 'wishlist_event.dart';

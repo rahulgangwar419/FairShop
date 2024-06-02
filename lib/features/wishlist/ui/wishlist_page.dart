@@ -1,9 +1,9 @@
 import 'dart:developer';
-import 'package:firstprogram/data/cart_items.dart';
-import 'package:firstprogram/data/product_list.dart';
-import 'package:firstprogram/data/wishlist_items.dart';
-import 'package:firstprogram/features/home/ui/bloc/home_bloc.dart';
-import 'package:firstprogram/features/wishlist/ui/bloc/wishlist_bloc.dart';
+import 'package:fairShop/data/cart_items.dart';
+import 'package:fairShop/data/product_list.dart';
+import 'package:fairShop/data/wishlist_items.dart';
+import 'package:fairShop/features/home/ui/bloc/home_bloc.dart';
+import 'package:fairShop/features/wishlist/ui/bloc/wishlist_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

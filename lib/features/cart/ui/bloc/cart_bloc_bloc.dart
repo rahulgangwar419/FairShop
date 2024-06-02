@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
-import 'package:firstprogram/data/cart_items.dart';
+import 'package:fairShop/data/cart_items.dart';
 import 'package:meta/meta.dart';
+
+import '../../../../data/cart_items.dart';
 
 part 'cart_bloc_event.dart';
 part 'cart_bloc_state.dart';

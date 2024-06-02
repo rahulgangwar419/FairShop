@@ -1,7 +1,7 @@
-import 'package:firstprogram/features/home/ui/Homepage.dart';
-import 'package:firstprogram/views/authorization/ui/signupPage.dart';
-import 'package:firstprogram/views/dashboard/ui/splash_page.dart';
-import 'package:firstprogram/widgets/custom_text_form_field.dart';
+import 'package:fairShop/features/home/ui/Homepage.dart';
+import 'package:fairShop/views/authorization/ui/signupPage.dart';
+import 'package:fairShop/views/dashboard/ui/splash_page.dart';
+import 'package:fairShop/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:developer';
-import 'package:firstprogram/data/cart_items.dart';
-import 'package:firstprogram/features/cart/ui/bloc/cart_bloc_bloc.dart';
-import 'package:firstprogram/payment/payment_page.dart';
+import 'package:fairShop/data/cart_items.dart';
+import 'package:fairShop/features/cart/ui/bloc/cart_bloc_bloc.dart';
+import 'package:fairShop/payment/payment_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:firstprogram/views/authorization/ui/login.dart';
-import 'package:firstprogram/features/home/ui/Homepage.dart';
+import 'package:fairShop/views/authorization/ui/login.dart';
+import 'package:fairShop/features/home/ui/Homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

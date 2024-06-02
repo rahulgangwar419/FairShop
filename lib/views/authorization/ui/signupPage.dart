@@ -1,4 +1,4 @@
-import 'package:firstprogram/views/authorization/ui/login.dart';
+import 'package:fairShop/views/authorization/ui/login.dart';
 import 'package:flutter/material.dart';
 
 class Signup extends StatefulWidget {
